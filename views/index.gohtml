@@ -1,0 +1,77 @@
+{{define "index.html"}}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{.Dbname}}数据库信息</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/tableSlider/js/jquery.autoMenu.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/static/tableSlider/css/jquery.autoMenu.css">
+
+</head>
+<body>
+
+<div class="layui-container divContainer">
+    <p style="text-align: center;">数据库:{{.Dbname}}</p>
+    <hr class="layui-bg-red">
+{{/*错误信息*/}}
+    {{if .err}}
+        <blockquote class="layui-elem-quote" style="color: red;">{{.err}}</blockquote>
+    {{end}}
+{{/*错误信息 end*/}}
+{{/*表信息*/}}
+    <div>
+        {{range .tableList}}
+            <h3 class="tableTile">表:{{.Name}}</h3>
+            <table class="layui-table" lay-size="sm">
+            <thead>
+            <tr>
+                <th>表名</th>
+                <th>使用引擎</th>
+                <th>创建时间</th>
+                <th>编码</th>
+                <th>表注释</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{.Name}}</td>
+                    <td>{{.Engine}}</td>
+                    <td>{{.CreateTime|timeStr}}</td>
+                    <td>{{.Collation}}</td>
+                    <td>{{.Comment}}</td>
+                </tr>
+            </tbody>
+        </table>
+ <div>
+<pre class="layui-code">
+//创建表的语句
+{{.TableCreateStr}}
+        </pre>
+</div>
+        {{end}}
+    </div>
+{{/*表信息 end*/}}
+</div>
+{{/*侧边栏*/}}
+<div class="autoMenu" id="autoMenu" data-autoMenu> </div>
+{{/*侧边栏*/}}
+<script>
+    layui.use(['element','code'], function(){ //加载code模块
+        var element = layui.element;
+        //监听折叠
+        element.on('collapse(test)', function(data){
+            //layer.msg('展开状态：'+ data.show);
+        });
+        layui.code(); //引用code方法
+
+    });
+</script>
+</body>
+</html>
+{{end}}

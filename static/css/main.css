@@ -1,0 +1,11 @@
+.divContainer{
+    margin-top: 20px;
+}
+.tableTile{
+    color:#fff;
+    font-size: 14px;
+    font-weight: bolder;
+    margin-top: 10px;
+    background: #fb9565;
+    padding:10px;
+}
